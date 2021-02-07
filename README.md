@@ -5,8 +5,7 @@
 in your rust crate root dir use it like:
 
 ```sh
-docker run --rm -it -v $(pwd):/usr/src/app \
-  -w /usr/src/app \
+docker run --rm -it -v $(pwd):/mnt -w /mnt \
   5422m4n/rust-deb-builder \
   cargo deb --target=x86_64-unknown-linux-musl
 ```
