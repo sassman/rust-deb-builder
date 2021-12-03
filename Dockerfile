@@ -1,7 +1,7 @@
 FROM rust:latest
 
 LABEL name="rust-deb-builder"
-LABEL version="1.0.0"
+LABEL version="2.0.0"
 LABEL repository="https://github.com/sassman/rust-deb-builder"
 LABEL homepage="https://github.com/sassman/rust-deb-builder"
 LABEL maintainer="Sven Assmann"
