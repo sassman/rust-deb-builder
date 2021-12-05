@@ -1,6 +1,24 @@
-# Rust package builder for .deb
+# Rust package builder for .deb (`x86_64-unknown-linux-musl`)
 
 > Builds statically linked binaries and packages it as .deb using docker
+
+## Usage via GitHub actions
+
+```yaml
+name: Build statically linked .deb package
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: build .deb file
+      uses: sassman/rust-deb-builder@1.57.0
+```
+
+## Usage via docker
 
 in your rust crate root dir use it like:
 
@@ -13,14 +31,6 @@ docker run --rm -it -v $(pwd):/mnt -w /mnt \
 ## details
 
 it's based on the official [rust image](https://hub.docker.com/_/rust):
-
-```Dockerfile
-FROM rust:latest
-RUN apt-get update && \
-    apt-get install musl musl-dev musl-tools && \
-    rustup target add x86_64-unknown-linux-musl && \
-    cargo install cargo-deb
-```
 
 ## References
 

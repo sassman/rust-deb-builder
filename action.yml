@@ -1,0 +1,15 @@
+name: 'Rust Cargo Deb Package Build (x86_64-unknown-linux-musl)'
+description: 'Builds a debian package using cargo deb for Rust packages, statically linked using target x86_64-unknown-linux-musl'
+branding:
+  icon: 'package'
+  color: 'blue'
+inputs:
+  cmd:
+    description: 'build command like: cargo deb -p my-crate'
+    required: true
+    default: 'cargo deb --target=x86_64-unknown-linux-musl'
+runs:
+  using: 'docker'
+  image: 'docker://5422m4n/rust-deb-builder:1.57.0'
+  args:
+    - ${{ inputs.cmd }}
