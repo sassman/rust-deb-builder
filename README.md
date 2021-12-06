@@ -15,17 +15,21 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: build .deb file
-      uses: sassman/rust-deb-builder@1.57.0
+      uses: sassman/rust-deb-builder@v1.57.0
 ```
+
+### Parameters
+
+- `package`: the package name, in case your crate as multiple bin targets
+- `target`: default: `x86_64-unknown-linux-musl`
 
 ## Usage via docker
 
 in your rust crate root dir use it like:
 
 ```sh
-docker run --rm -it -v $(pwd):/mnt -w /mnt \
-  5422m4n/rust-deb-builder \
-  cargo deb --target=x86_64-unknown-linux-musl
+# run this in your crate root where the `Cargo.toml` is located
+docker run --rm -v $(pwd):/mnt -w /mnt 5422m4n/rust-deb-builder:1.57.0
 ```
 
 ## details
