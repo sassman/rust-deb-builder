@@ -13,4 +13,4 @@ inputs:
     default: 'x86_64-unknown-linux-musl'
 runs:
   using: 'docker'
-  image: 'docker://5422m4n/rust-deb-builder:v1.57.0'
+  image: 'docker://5422m4n/rust-deb-builder:1.57.0'
