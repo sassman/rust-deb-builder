@@ -1,7 +1,8 @@
-FROM rust:1.57.0-buster
+ARG VERSION
+FROM rust:${VERSION}-buster
 
 LABEL name="rust-deb-builder"
-LABEL version="1.57.0"
+LABEL version="$VERSION"
 LABEL repository="https://github.com/sassman/rust-deb-builder"
 LABEL homepage="https://github.com/sassman/rust-deb-builder"
 LABEL maintainer="Sven Assmann"

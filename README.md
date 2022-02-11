@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: build .deb file
-      uses: sassman/rust-deb-builder@v1.57.0
+      uses: sassman/rust-deb-builder@v1
 ```
 
 ### Parameters
@@ -29,7 +29,7 @@ in your rust crate root dir use it like:
 
 ```sh
 # run this in your crate root where the `Cargo.toml` is located
-docker run --rm -v $(pwd):/mnt -w /mnt 5422m4n/rust-deb-builder:1.57.0
+docker run --rm -v $(pwd):/mnt -w /mnt 5422m4n/rust-deb-builder:latest
 ```
 
 ## details
