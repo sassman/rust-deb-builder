@@ -1,4 +1,4 @@
-VERSION:=1.59.0
+VERSION:=1.64.0
 
 image-m1:
 	docker build -t 5422m4n/rust-deb-builder:${VERSION} \
