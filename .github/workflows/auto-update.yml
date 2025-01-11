@@ -41,9 +41,12 @@ jobs:
           if [ "$CURRENT_VERSION" != "$RUST_VERSION" ]; then
             echo "Rust version is outdated"
             sed -i "s/VERSION\:\=.*/VERSION\:\=$RUST_VERSION/g" Makefile
+
+            echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+            git config --global user.name "Sven Kanoldt"
+            git config --global user.email "sven+bot@d34dlock.me"
             git add Makefile
             git commit -m "chore: Update Rust version to $RUST_VERSION"
-            gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
             git push origin main
             git tag -a "v$RUST_VERSION" -m "chore: Update Rust version to $RUST_VERSION"
             git push origin "v$RUST_VERSION"
