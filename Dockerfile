@@ -1,11 +1,13 @@
 ARG VERSION
-FROM rust:${VERSION}-buster
+ARG BASE_IMG_TAG
+
+FROM rust:${BASE_IMG_TAG}
 
 LABEL name="rust-deb-builder"
-LABEL version="$VERSION"
+LABEL version="${VERSION}"
 LABEL repository="https://github.com/sassman/rust-deb-builder"
 LABEL homepage="https://github.com/sassman/rust-deb-builder"
-LABEL maintainer="Sven Assmann"
+LABEL maintainer="Sven Kanoldt"
 
 RUN apt-get update && \
     apt-get install musl musl-dev musl-tools && \
