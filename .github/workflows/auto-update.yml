@@ -1,0 +1,53 @@
+name: Deploy to DockerHub
+on:
+  schedule:
+    # every day at midnight
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      rust-version:
+        type: string
+        description: "Rust version"
+        required: true
+        default: "1.84.0"
+
+jobs:
+  update:
+    name: Update
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: fetch latest rust version
+        if: ${{ github.event_name == 'schedule' }}
+        shell: bash
+        run: |
+          VERSION=$(curl -sSL https://static.rust-lang.org/dist/channel-rust-stable.toml | yq -oy -p toml '.pkg.rust.target.x86_64-unknown-linux-musl.url' | sed -E 's!https://.*rust-([0-9]+[.][0-9]+[.][0-9]+).*!\1!g')
+          echo "RUST_VERSION=$VERSION" >> $GITHUB_ENV
+      - name: set rust version
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo "RUST_VERSION=${{ github.event.inputs.rust-version }}" >> $GITHUB_ENV
+      - name: check current rust version
+        shell: bash
+        run: |
+          echo "Latest Rust version is ${{ env.RUST_VERSION }}"
+          CURRENT_VERSION=$(grep ^VERSION Makefile | sed 's/VERSION\:\=//g')
+
+          # check if that rust version tag exists already
+          if git rev-parse "v${{ env.RUST_VERSION }}" >/dev/null 2>&1; then
+            echo "Rust version tag v${{ env.RUST_VERSION }} already exists"
+            exit 0
+          fi
+
+          if [ "$CURRENT_VERSION" != "$RUST_VERSION" ]; then
+            echo "Rust version is outdated"
+            sed -i "s/VERSION\:\=.*/VERSION\:\=$RUST_VERSION/g" Makefile
+            git add Makefile
+            git commit -m "chore: Update Rust version to $RUST_VERSION"
+            gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+            git push origin main
+            git tag -a "v$RUST_VERSION" -m "chore: Update Rust version to $RUST_VERSION"
+            git push origin "v$RUST_VERSION"
+          else
+            echo "Rust version is up to date"
+          fi
