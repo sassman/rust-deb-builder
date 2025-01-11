@@ -1,4 +1,4 @@
-name: Deploy to DockerHub
+name: Auto Update Rust Version
 on:
   schedule:
     # every day at midnight
