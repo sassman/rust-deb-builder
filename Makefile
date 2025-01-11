@@ -17,7 +17,6 @@ pull:
 	docker pull rust:${BASE_IMG_TAG}
 
 publish:
-	docker use --load 5422m4n/rust-deb-builder:${VERSION}
 	docker push 5422m4n/rust-deb-builder:${VERSION}
 	docker push 5422m4n/rust-deb-builder:latest
 tag:
