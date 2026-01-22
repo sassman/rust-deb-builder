@@ -6,6 +6,12 @@ else
     PACKAGE="-p ${INPUT_PACKAGE}"
 fi
 
+if [ -z "${INPUT_FEATURES}" ]; then
+    FEATURES=""
+else
+    FEATURES="-- --features ${INPUT_FEATURES}"
+fi
+
 if [ -z "${INPUT_TARGET}" ]; then
     INPUT_TARGET="x86_64-unknown-linux-musl"
 fi
@@ -16,4 +22,4 @@ TARGET="--target ${INPUT_TARGET}"
 rustc --version
 cargo --version
 cargo deb --version
-cargo deb --verbose ${TARGET} ${PACKAGE}
+cargo deb --verbose ${TARGET} ${PACKAGE} ${FEATURES}

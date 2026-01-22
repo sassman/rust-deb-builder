@@ -16,12 +16,18 @@ jobs:
     - uses: actions/checkout@master
     - name: build .deb file
       uses: sassman/rust-deb-builder@v1
+      with:
+        # optional: translates into `cargo -p your-package-name`
+        package: your-package-name
+        # otpional: translates into `cargo --features new-feature`
+        features: new-feature
 ```
 
 ### Parameters
 
 - `package`: the package name, in case your crate as multiple bin targets
 - `target`: default: `x86_64-unknown-linux-musl`
+- `features`: optional, translates into cargo --features <features>
 
 ## Usage via docker
 
