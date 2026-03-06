@@ -1,4 +1,4 @@
-VERSION:=1.93.1
+VERSION:=1.94.0
 BASE_IMG_TAG:=${VERSION}-bookworm
 
 build-ci:
